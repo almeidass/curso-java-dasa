@@ -36,14 +36,10 @@ public class Ex12Pesquisa {
 
             JOptionPane.showMessageDialog(null, "Você escolheu a opção\"" + opcoes[n] + "\"");
         }
-
-        if (somaNotas / 3 >= 10) {
-            JOptionPane.showMessageDialog(null, "Cliente muito satisfeito");
-        } else if (somaNotas / 3 >= 5 && somaNotas / 3 < 10) {
-            JOptionPane.showMessageDialog(null, "Cliente satisfeito");
-        } else {
-            JOptionPane.showMessageDialog(null, "Cliente não satisfeito");
-        }
+        
+        JOptionPane.showMessageDialog(null, "Percentual de satisfação: " + (100 - (perguntas.length * 10 - somaNotas) * 100 / (perguntas.length * 10)) + "%");
+        
+        //System.out.println("###### Valor de N: " + (100 - (perguntas.length * 10 - somaNotas) * 100 / (perguntas.length * 10)));
 
     }
 
