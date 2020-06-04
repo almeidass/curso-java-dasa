@@ -39,9 +39,7 @@ public class Ex12Pesquisa {
         
         JOptionPane.showMessageDialog(null, "Percentual de satisfação: "
                 + String.format("%.2f", (100 - (perguntas.length * 10 - somaNotas) * 100 / (perguntas.length * 10))) + "%");
-        
-        //System.out.println("###### Valor de N: " + (100 - (perguntas.length * 10 - somaNotas) * 100 / (perguntas.length * 10)));
-
+  
     }
 
 }
