@@ -1,35 +1,39 @@
 package br.com.dasa.console;
 
-public class Vendedor extends Funcionario {
+public class Vendedor extends Mensalista {
 
     private double comissao;
-    private int valorTotalVendas;
+    private double valorTotalVendas;
 
-    public Vendedor(double comissao, int valorTotalVendas, int matricula, String nome, String cargo, double salarioBruto) {
-        super(matricula, nome, cargo, salarioBruto);
+    public Vendedor(int matricula, String nome, double salarioBase, double comissao, double valorTotalVendas) {
+        super(matricula, nome, "Vendedor", salarioBase);
         this.comissao = comissao;
         this.valorTotalVendas = valorTotalVendas;
     }
 
     @Override
     public void calcularSalario() {
-        System.out.println("Matricula: " + this.matricula);
-        System.out.println("Nome: " + this.nome);
-        System.out.println("Cargo: " + this.cargo);
-        System.out.println("+ Salario S/ Comissao: " + this.salarioBruto);
-        System.out.println("= Valor total das vendas: " + this.valorTotalVendas);
-        System.out.println("% Percentual da comissao: " + this.comissao);
-        System.out.println("+ Valor da Comissao: " + this.calcularComissao());
-        System.out.println("= Salario C/ Comissao: " + this.calcularSalarioComissao());
-        System.out.println("- Percentual do IR: " + this.calcularTaxaImpostoRenda(this.calcularSalarioComissao()));
-        System.out.println("= Salario Liquido: " + this.calcularSalarioLiquido(this.calcularSalarioComissao()));
+        imprimirCabecalho();
+        double comissao = this.calcularComissao();
+        double salarioBruto = this.calcularSalarioBruto();
+        double aliquotaIR = this.calcularAliquotaImpostoRenda(salarioBruto);
+        double imposto = this.calcularDescontoSalario(salarioBruto);
+        double salarioLiquido = calcularSalarioLiquido(salarioBruto);
+        System.out.println("Total das Vendas..." + fmt.format(this.valorTotalVendas));
+        System.out.println("Comissao %........." + this.comissao + "%");
+        System.out.println("Valor da Comissao.." + fmt.format(comissao));
+        System.out.println("Sálario Bruto......" + fmt.format(salarioBruto));
+        System.out.println("Alíquota do IR....." + aliquotaIR + "%");
+        System.out.println("Imposto............" + fmt.format(imposto));
+        System.out.println("Salário Líquido...." + fmt.format(salarioLiquido));
     }
-
+    
     public double calcularComissao() {
         return this.valorTotalVendas * (this.comissao / 100);
     }
-    
-    public double calcularSalarioComissao() {
-        return this.salarioBruto + this.calcularComissao();
+
+    @Override
+    public double calcularSalarioBruto() {
+        return salarioBase + this.calcularComissao();
     }
 }

@@ -1,29 +1,37 @@
 package br.com.dasa.console;
 
-public class Funcionario {
+import java.text.NumberFormat;
+
+public abstract class Funcionario {
 
     protected int matricula;
     protected String nome;
     protected String cargo;
-    protected double salarioBruto;
+    protected double salarioBase;
+    
+    protected NumberFormat fmt = NumberFormat.getCurrencyInstance();
 
-    public Funcionario(int matricula, String nome, String cargo, double salarioBruto) {
+    public Funcionario(int matricula, String nome, String cargo, double salarioBase) {
         this.matricula = matricula;
         this.nome = nome;
         this.cargo = cargo;
-        this.salarioBruto = salarioBruto;
+        this.salarioBase = salarioBase;
     }
 
-    public void calcularSalario() {
-        System.out.println("Matricula: " + this.matricula);
-        System.out.println("Nome: " + this.nome);
-        System.out.println("Cargo: " + this.cargo);
-        System.out.println("Salario Bruto: " + this.salarioBruto);
-        System.out.println("Imposto: " + this.calcularTaxaImpostoRenda(this.salarioBruto));
-        System.out.println("Salario Liquido: " + this.calcularSalarioLiquido(this.salarioBruto));
+    protected abstract void calcularSalario();
+    protected abstract double calcularSalarioBruto();
+    
+    protected void imprimirCabecalho() {
+        System.out.println("---------------------------------------");
+        System.out.println("Diagnosticos da America - Contracheques");
+        System.out.println("---------------------------------------");
+        System.out.println("Matrícula.........." + this.matricula);
+        System.out.println("Nome..............." + this.nome);
+        System.out.println("Cargo.............." + this.cargo);
+        System.out.println("Salário Base......." + fmt.format(this.salarioBase));
     }
-
-    public double calcularTaxaImpostoRenda(double salarioBruto) {
+    
+    public double calcularAliquotaImpostoRenda(double salarioBruto) {
         if (salarioBruto <= 1000) {
             return 0;
         } else if (salarioBruto > 1000 && salarioBruto <= 3000) {
@@ -32,8 +40,13 @@ public class Funcionario {
             return 20;
         }
     }
+    
+    public double calcularDescontoSalario(double salarioBruto) {
+        return salarioBruto / 100 * calcularAliquotaImpostoRenda(salarioBruto);
+    }
 
     public double calcularSalarioLiquido(double salarioBruto) {
-        return salarioBruto - (salarioBruto / 100 * calcularTaxaImpostoRenda(salarioBruto));
+        return salarioBruto - calcularDescontoSalario(salarioBruto);
     }
+   
 }
