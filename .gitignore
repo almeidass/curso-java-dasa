@@ -40,3 +40,4 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven
+/Modulo_01/Aula09_JDBC_Exercicio/nbproject/
